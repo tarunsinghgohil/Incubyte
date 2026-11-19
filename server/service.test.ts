@@ -1,0 +1,5 @@
+import { beforeEach, describe, expect, it } from "vitest";
+import { db, initialize } from "./db.js";
+import { listEmployees, updateSalary } from "./service.js";
+beforeEach(()=>{initialize();db.exec("DELETE FROM salary_changes; DELETE FROM employees;");db.prepare("INSERT INTO employees(employee_code,first_name,last_name,email,department,country,currency,salary_minor,job_title,start_date,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?)").run("ACME-1","Ada","Lovelace","ada@acme.test","Engineering","India","INR",100000,"Engineer","2024-01-01","2024-01-01")});
+describe("salary service",()=>{it("filters and pages employees",()=>{const result=listEmployees({country:"India",page:1,pageSize:10,sort:"salary",direction:"desc"});expect(result.meta.total).toBe(1);expect(result.data[0].name).toBe("Ada Lovelace")});it("records an immutable salary history when updating",()=>{const updated=updateSalary(1,125000,"Annual merit increase")!;expect(updated.salary_minor).toBe(125000);expect(updated.history).toHaveLength(1);expect(updated.history[0]).toMatchObject({old_salary_minor:100000,new_salary_minor:125000,reason:"Annual merit increase"})})});
