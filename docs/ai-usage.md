@@ -10,4 +10,6 @@ AI assisted with reviewing the existing implementation against the assessment, i
 - Require environment-configured access protection for a public demo, while documenting that this is not full product authentication/RBAC.
 - Use a persistent Render disk and do not run the destructive seed command automatically during deployments.
 
-AI-generated changes were checked against the existing code and validated with the test suite and TypeScript compiler. The production bundle command was also attempted; in the current Windows environment, application-control policy blocks loading Rollup's native module, so that bundle result must be verified in an unrestricted environment or CI.
+The implementation also added native in-app routes and responsive data views without duplicating the existing dependency stack. Salary updates use the existing SQLite salary history table with currency, effective-date, actor, and server timestamp fields; tests remain isolated from the developer database.
+
+The AI-assisted implementation was reviewed against the assessment guide, package scripts, and existing source. Validation commands, including tests and the production build, must be recorded exactly from the environment in which they run.
